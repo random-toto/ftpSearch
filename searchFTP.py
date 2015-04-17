@@ -4,6 +4,24 @@
 import os 
 import re
 
+
+def sur8bit(Liste):
+    print("Toto")
+    #~ return False
+    if type(Liste) is list:
+        l = len(Liste)
+    for i in Liste:
+        if type(i) is not str:
+            return False
+    Liste2 = []
+    for i in Liste:
+        while len(i) < 8:
+            i = '0' + str(i)
+        Liste2.append(i)
+    return Liste2
+
+
+
 def IPv4iter(Tuple):
     ''' Reçoit un tuple en entrée. Devrait être IP/masque ou bien (ip, masque)
     Renvoie la liste des IPs correspondant au masque.
@@ -12,26 +30,33 @@ def IPv4iter(Tuple):
         print(type(Tuple))
         Tuple = str(Tuple)
     l = len(Tuple)
-
-    if l == 1:
+    print(l)
+    if l != 2:
         try:
             Liste = Tuple.split('/')
             ip = Liste[0]
             masque = Liste[1]
         except:
             return False
-    elif l == 2:
+    else:
         ip = Tuple[0]
         masque = Tuple[1]
-    else:
-        return False
     try:
         Liste = ip.split('.')
     except:
         return False
-    if masque == 32:
+    try:
+        IP0 = int(Liste[0])
+        IP1 = int(Liste[1])
+        IP2 = int(Liste[2])
+        IP3 = int(Liste[3])
+        M = int(masque)
+    except:
+        raise Exception("N.A.N")
+        return False
+    if M == 32:
         return ip
-    elif ip <32 and ip >= 0:
+    elif M <32 and M >= 0:
         Liste2 = ip2bit(Liste, masque)
     else:
         return False
@@ -53,13 +78,17 @@ def ip2bit(Liste, masque):
             raise Exception("N.A.N.")
             return False
         Liste2.append(str(bin(i)[2:]))
-    return Liste2
+    Liste3 = sur8bit(Liste2)
+    
+    return Liste3
 
 
-IPv4iter(("toto", 1))
+#~ IPv4iter(("toto", 1))
 
-#~ IPv4iter("192.168.1.10/32")
-
+#~ Liste1 = IPv4iter("192.168.2.25/32")
+Liste2 = IPv4iter("192.168.6.0/30")
+#~ print(Liste1, Liste2)
+print(Liste2)
 
 
 def ip2bit(Liste):
@@ -67,6 +96,7 @@ def ip2bit(Liste):
     '''
     l = len(Liste)
     print(l, Liste)
+
 
 def IPv6iter(Tuple = None):
     ''' Srsly Dude ?
