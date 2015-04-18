@@ -21,6 +21,19 @@ def sur8bit(Liste):
     return Liste2
 
 
+def iteration(Liste, masque):
+    '''
+    '''
+    print(Liste)
+    ip = ''
+    for i in Liste:
+        ip += i
+    print(ip, masque)
+    print("----------------------")
+    IP = str(ip)
+    IP = IP[:masque]
+    IP += '0' * (32 - len(IP))    
+    print(IP)
 
 def IPv4iter(Tuple):
     ''' Reçoit un tuple en entrée. Devrait être IP/masque ou bien (ip, masque)
@@ -56,10 +69,11 @@ def IPv4iter(Tuple):
         return False
     if M == 32:
         return ip
-    elif M <32 and M >= 0:
+    elif M < 32 and M >= 0:
         Liste2 = ip2bit(Liste, masque)
     else:
         return False
+    Liste3 = iteration(Liste2, M)
     
     
     print(Tuple)
@@ -86,16 +100,14 @@ def ip2bit(Liste, masque):
 #~ IPv4iter(("toto", 1))
 
 #~ Liste1 = IPv4iter("192.168.2.25/32")
-Liste2 = IPv4iter("192.168.6.0/30")
+Liste2 = IPv4iter("192.168.6.1/30")
 #~ print(Liste1, Liste2)
 print(Liste2)
 
 
-def ip2bit(Liste):
-    '''
-    '''
-    l = len(Liste)
-    print(l, Liste)
+
+#######################
+
 
 
 def IPv6iter(Tuple = None):
